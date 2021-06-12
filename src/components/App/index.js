@@ -4,7 +4,7 @@ import "./App.css";
 import SearchForm from "../SearchForm";
 import SearchResults from "../SearchResults";
 import SingleRepo from "../SingleRepo";
-import MainPage from "../MainPage/MainPage";
+import MainPage from "../MainPage";
 // API
 import { searchRepo } from "../../apiCalls";
 // Router
