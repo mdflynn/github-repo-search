@@ -7,17 +7,20 @@ import SingleRepo from "../SingleRepo";
 import MainPage from "../MainPage";
 // API
 import { searchGitHubApi } from "../../apiCalls";
-// Router
-import { Route, Switch } from "react-router-dom";
 
-function App() {
+const App = () => {
   const [fetchedSearchResults, setFetchedSearchResults] = useState([]);
   // clean data on click
-  const [repoInfo, setRepoInfo] = useState({});
+  const [repoInfo, setRepoInfo] = useState("");
+
+  // func to filter by language
+  // func to search by updated page
+  // func to sort by stars, ascend, desc
 
   const searchRepos = (searchCriteria) => {
     // dynamic api call based on criteria type
-    let baseUrl = searchCriteria.name
+
+    let baseUrl = searchCriteria.includes("/")
       ? "repos/"
       : "search/repositories?&sort=stars&order=desc&q=";
 
@@ -34,15 +37,16 @@ function App() {
 
   return (
     <>
-      {fetchedSearchResults.length > 0 && console.log(fetchedSearchResults)}
       <SearchForm api={searchRepos} />
-      <Switch>
-        <Route exact path="/" component={MainPage} />
-        <Route path="/search-results" component={SearchResults} />
-        <Route path="/repo-details" component={SingleRepo} />
-      </Switch>
+      {fetchedSearchResults.length > 0 && !repoInfo && (
+        <SearchResults
+          api={searchRepos}
+          data={fetchedSearchResults}
+        />
+      )}
+      {repoInfo && <SingleRepo data={repoInfo} />}
     </>
   );
-}
+};
 
 export default App;
