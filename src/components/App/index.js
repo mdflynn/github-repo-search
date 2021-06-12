@@ -6,22 +6,35 @@ import SearchResults from "../SearchResults";
 import SingleRepo from "../SingleRepo";
 import MainPage from "../MainPage";
 // API
-import { searchAllRepos } from "../../apiCalls";
+import { searchGitHubApi } from "../../apiCalls";
 // Router
 import { Route, Switch } from "react-router-dom";
 
 function App() {
-  const [searchResults, setSearchResults] = useState([]);
-  const [repoView, setRepoView] = useState({});
+  const [fetchedSearchResults, setFetchedSearchResults] = useState([]);
+  // clean data on click
+  const [repoInfo, setRepoInfo] = useState({});
 
   const searchRepos = (searchCriteria) => {
-    searchAllRepos(searchCriteria)
-      .then((res) => res.json())
-      .then((data) => setSearchResults(data.items));
+    // dynamic api call based on criteria type
+    let baseUrl = searchCriteria.name
+      ? "repos/"
+      : "search/repositories?&sort=stars&order=desc&q=";
+
+    searchGitHubApi(baseUrl, searchCriteria)
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.items) {
+          setFetchedSearchResults(data.items);
+        } else {
+          setRepoInfo(data);
+        }
+      });
   };
 
   return (
     <>
+      {fetchedSearchResults.length > 0 && console.log(fetchedSearchResults)}
       <SearchForm api={searchRepos} />
       <Switch>
         <Route exact path="/" component={MainPage} />
