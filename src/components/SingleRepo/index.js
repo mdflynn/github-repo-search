@@ -10,6 +10,7 @@ const SingleRepo = ({ data }) => {
       <Card.Img variant="top" src={data.owner.avatar_url} />
       <Card.Body>
         <Card.Title>{data.name}</Card.Title>
+        <Card.Text>Created by: {data.owner.login}</Card.Text>
         <Card.Text>Language: {data.language}</Card.Text>
         <Card.Text>Total ⭐'s: {data.stargazers_count}</Card.Text>
         <Button
