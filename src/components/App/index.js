@@ -1,8 +1,9 @@
 import './App.css';
+import SearchForm from "../SearchForm";
 
 function App() {
   return (
-    <h1>GitHub Repo Search</h1>
+    <SearchForm />
   );
 }
 
