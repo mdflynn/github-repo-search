@@ -1,4 +1,17 @@
-// example search results for "tetris"
+export const searchRepo = async (searchCriteria) => {
+    const baseUrl = 'https://api.github.com/search/repositories?'
+    const searchResults = await fetch(`${baseUrl}q=tetris+game+language:javascript&sort=stars&order=desc`)
+    return searchResults;
+}
+
+// example search results for "tetris in javascript"
+// query https://api.github.com/search/repositories?q=tetris+game+language:javascript&sort=stars&order=desc
+
+const noResults = {
+    total_count: 0,
+    incomplete_results: false,
+    items: []
+  }
 
 const apiResults = {
   total_count: 123,
