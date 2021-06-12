@@ -4,30 +4,25 @@ import "./SearchForm.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import { searchRepo } from "../../apiCalls";
 
 const SearchForm = () => {
   // pass down prop function to pass data to repo views
-
-  // searchRepo()
-  //   .then((res) => res.json())
-  //   .then((data) => console.log(data));
 
   const [keywords, setKeywords] = useState([]);
 
   const handleKeywordInput = (e) => {
     setKeywords(e.target.value);
   };
-  // check for invalid characters (; : / etc.)
 
   const cleanSearchCriteria = () => {
-    const removePunctuation = keywords.replaceAll(/[.,:;]/g, "");
+    const removePunctuation = keywords.replaceAll(/[.,:';]/g, "");
     const cleanedData = removePunctuation.split(" ").join("+");
     return cleanedData;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // prop function here to pass data to api
   };
 
   return (
