@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SearchForm.css";
 // Bootstrap Components
 import Form from "react-bootstrap/Form";
@@ -11,16 +11,27 @@ const SearchForm = () => {
   //   .then((res) => res.json())
   //   .then((data) => console.log(data));
 
+  const [keywords, setKeywords] = useState("");
+  const [username, setUsername] = useState("");
+
+  const handleKeywordInput = (e) => {
+    setKeywords(e.target.value)
+  }
+
+  const handleUsernameInput = (e) => {
+    setUsername(e.target.value)
+  }
+
   return (
     <Form>
       <Form.Group controlId="formSearch">
         <Form.Label>Search for repos on GitHub!</Form.Label>
         <Form.Row className="align-items-center">
           <Col xs="3">
-            <Form.Control type="text" placeholder="Enter Keywords" />
+            <Form.Control type="text" placeholder="Enter Keywords" onChange={handleKeywordInput} value={keywords}/>
           </Col>
           <Col xs="2">
-            <Form.Control type="text" placeholder="GitHub Username (optional)" />
+            <Form.Control type="text" placeholder="GitHub Username (optional)" onChange={handleUsernameInput} value={username} />
           </Col>
           <Col xs="auto">
             <Button variant="primary" type="submit">
