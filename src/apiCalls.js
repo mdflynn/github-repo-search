@@ -1,8 +1,9 @@
-export const searchRepo = async (searchCriteria) => {
-    const baseUrl = 'https://api.github.com/search/repositories?'
-    const searchResults = await fetch(`${baseUrl}q=tetris+game+language:javascript&sort=stars&order=desc`)
+export const searchGitHubApi = async (baseUrl, searchCriteria) => {
+    const searchResults = await fetch(`https://api.github.com/${baseUrl}${searchCriteria}`)
     return searchResults;
 }
+// single repo criteria => GET/repos/:owner{login}/:repo(name)
+// https://api.github.com/repos/mdflynn/slapjack
 
 // example search results for "tetris in javascript"
 // query https://api.github.com/search/repositories?q=tetris+game+language:javascript&sort=stars&order=desc

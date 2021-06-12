@@ -5,9 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 
-const SearchForm = () => {
-  // pass down prop function to pass data to repo views
-
+const SearchForm = ({ api }) => {
   const [keywords, setKeywords] = useState([]);
 
   const handleKeywordInput = (e) => {
@@ -22,7 +20,8 @@ const SearchForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // prop function here to pass data to api
+    const searchCriteria = cleanSearchCriteria();
+    api(searchCriteria);
   };
 
   return (
