@@ -7,31 +7,41 @@ import Col from "react-bootstrap/Col";
 import { searchRepo } from "../../apiCalls";
 
 const SearchForm = () => {
+  // pass down prop function to pass data to repo views
+
   // searchRepo()
   //   .then((res) => res.json())
   //   .then((data) => console.log(data));
 
-  const [keywords, setKeywords] = useState("");
-  const [username, setUsername] = useState("");
+  const [keywords, setKeywords] = useState([]);
 
   const handleKeywordInput = (e) => {
-    setKeywords(e.target.value)
-  }
+    setKeywords(e.target.value);
+  };
+  // check for invalid characters (; : / etc.)
 
-  const handleUsernameInput = (e) => {
-    setUsername(e.target.value)
-  }
+  const cleanSearchCriteria = () => {
+    const removePunctuation = keywords.replaceAll(/[.,:;]/g, "");
+    const cleanedData = removePunctuation.split(" ").join("+");
+    return cleanedData;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formSearch">
         <Form.Label>Search for repos on GitHub!</Form.Label>
         <Form.Row className="align-items-center">
-          <Col xs="3">
-            <Form.Control type="text" placeholder="Enter Keywords" onChange={handleKeywordInput} value={keywords}/>
-          </Col>
-          <Col xs="2">
-            <Form.Control type="text" placeholder="GitHub Username (optional)" onChange={handleUsernameInput} value={username} />
+          <Col xs="5">
+            <Form.Control
+              type="text"
+              placeholder="Enter Keywords"
+              onChange={handleKeywordInput}
+              value={keywords}
+            />
           </Col>
           <Col xs="auto">
             <Button variant="primary" type="submit">
@@ -40,7 +50,9 @@ const SearchForm = () => {
           </Col>
         </Form.Row>
         <Form.Text className="text-muted">
-          Try a topic idea, project title, or a username!
+          Try a topic idea, project title, or random keywords!
+          <br />
+          (Be sure to add a comma after each word)
         </Form.Text>
       </Form.Group>
     </Form>
