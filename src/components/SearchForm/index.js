@@ -1,17 +1,26 @@
 import React from "react";
+import "./SearchForm.css";
 // Bootstrap Components
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import { searchRepo } from "../../apiCalls";
 
 const SearchForm = () => {
+  // searchRepo()
+  //   .then((res) => res.json())
+  //   .then((data) => console.log(data));
+
   return (
     <Form>
       <Form.Group controlId="formSearch">
-        <Form.Label>Search repos on GitHub!</Form.Label>
+        <Form.Label>Search for repos on GitHub!</Form.Label>
         <Form.Row className="align-items-center">
-          <Col xs="6">
-            <Form.Control type="text" placeholder="Enter search criteria" />
+          <Col xs="3">
+            <Form.Control type="text" placeholder="Enter Keywords" />
+          </Col>
+          <Col xs="2">
+            <Form.Control type="text" placeholder="GitHub Username (optional)" />
           </Col>
           <Col xs="auto">
             <Button variant="primary" type="submit">
@@ -19,9 +28,8 @@ const SearchForm = () => {
             </Button>
           </Col>
         </Form.Row>
-
         <Form.Text className="text-muted">
-          Try a username, project title, or a topic!
+          Try a topic idea, project title, or a username!
         </Form.Text>
       </Form.Group>
     </Form>
