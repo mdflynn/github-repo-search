@@ -8,7 +8,7 @@ import { createSortFilterUrl } from "../../utilities";
 import Pagination from "react-bootstrap/Pagination";
 import Dropdown from "react-bootstrap/Dropdown";
 
-const SearchResults = ({ data, api, url }) => {
+const SearchResults = ({ data, api, url, clear }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [dropdownLang, setDropdownLang] = useState([]);
   const [filteredUrl, setFilteredUrl] = useState(url);
@@ -80,7 +80,7 @@ const SearchResults = ({ data, api, url }) => {
   return (
     <>
       <div className="button-container">
-        <Dropdown>
+        <Dropdown className="button-space">
           <Dropdown.Toggle variant="info" id="dropdown-basic">
             Filter by Language
           </Dropdown.Toggle>
