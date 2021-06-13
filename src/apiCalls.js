@@ -1,17 +1,28 @@
 export const searchGitHubApi = async (url) => {
-    const searchResults = await fetch(`${url}`)
-    return searchResults;
-}
+  const searchResults = await fetch(`${url}`);
+  return searchResults;
+};
 
 export const createUrl = (searchCriteria) => {
-  let baseUrl = searchCriteria.includes("/")
+  let baseUrl = "";
+
+  if (!searchCriteria.includes("github")) {
+    baseUrl = searchCriteria.includes("/")
       ? "https://api.github.com/repos/"
-      : "https://api.github.com/search/repositories?&sort=stars&order=desc&q=";
-    if (searchCriteria.includes("language")) {
-      baseUrl = ''
-    }
-  return `${baseUrl}${searchCriteria}`
-}
+      : "https://api.github.com/search/repositories?&q=";
+  }
+
+  if (
+    searchCriteria.includes("language") ||
+    searchCriteria.includes("page") ||
+    searchCriteria.includes("sort")
+  ) {
+    baseUrl = "";
+  }
+
+  return `${baseUrl}${searchCriteria}`;
+};
+
 // single repo criteria => GET/repos/:owner{login}/:repo(name)
 // https://api.github.com/repos/mdflynn/slapjack
 
@@ -19,10 +30,10 @@ export const createUrl = (searchCriteria) => {
 // query https://api.github.com/search/repositories?q=tetris+game+language:javascript&sort=stars&order=desc
 
 const noResults = {
-    total_count: 0,
-    incomplete_results: false,
-    items: []
-  }
+  total_count: 0,
+  incomplete_results: false,
+  items: [],
+};
 
 const apiResults = {
   total_count: 123,
