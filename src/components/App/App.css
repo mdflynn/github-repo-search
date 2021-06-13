@@ -1,0 +1,18 @@
+.app-div,
+html {
+  background: linear-gradient(#fffde4, #005aa7) no-repeat fixed;
+  height: 100vh;
+}
+
+.searchform-div {
+  margin: 10px 0 0 20px;
+}
+
+.singlerepo-div {
+  display: flex;
+  justify-content: center;
+}
+
+.no-search-results {
+  margin-left: 20px;
+}

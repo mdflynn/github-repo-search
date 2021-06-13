@@ -6,14 +6,22 @@ import Card from "react-bootstrap/Card";
 
 const SingleRepo = ({ data, home }) => {
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card style={{ width: "20rem" }}>
       <Card.Img variant="top" src={data.owner.avatar_url} />
       <Card.Body>
         <Card.Title>{data.name}</Card.Title>
         <Card.Text>Created by: {data.owner.login}</Card.Text>
+        {data.description && (
+          <Card.Text>Description: {data.description}</Card.Text>
+        )}
         <Card.Text>Language: {data.language}</Card.Text>
         <Card.Text>Total ⭐'s: {data.stargazers_count}</Card.Text>
-        <Button variant="warning" size="sm" onClick={() => home("")}>
+        <Button
+          variant="warning"
+          size="sm"
+          className="button-space"
+          onClick={() => home("")}
+        >
           Back to Results
         </Button>
         <Button

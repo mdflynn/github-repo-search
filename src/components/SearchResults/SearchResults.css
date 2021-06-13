@@ -1,4 +1,16 @@
 .button-container {
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
+}
+
+.card-deck {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pagination-div {
+    display: flex;
+    justify-content: center;
 }
