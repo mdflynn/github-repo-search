@@ -110,11 +110,13 @@ const SearchResults = ({ data, api, url, clear }) => {
 
       <div className="card-deck">{createResultCards()}</div>
 
-      <Pagination>
-        <Pagination.Prev onClick={viewPreviousPage} />
-        <Pagination.Item>{pageNumber}</Pagination.Item>
-        <Pagination.Next onClick={viewNextPage} />
-      </Pagination>
+      <div className="pagination-div">
+        <Pagination>
+          <Pagination.Prev onClick={viewPreviousPage} />
+          <Pagination.Item>{pageNumber}</Pagination.Item>
+          <Pagination.Next onClick={viewNextPage} />
+        </Pagination>
+      </div>
     </>
   );
 };

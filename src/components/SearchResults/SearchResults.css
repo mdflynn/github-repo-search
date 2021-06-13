@@ -9,3 +9,8 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
+.pagination-div {
+    display: flex;
+    justify-content: center;
+}
