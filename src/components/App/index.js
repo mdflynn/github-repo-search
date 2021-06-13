@@ -4,9 +4,10 @@ import "./App.css";
 import SearchForm from "../SearchForm";
 import SearchResults from "../SearchResults";
 import SingleRepo from "../SingleRepo";
-import MainPage from "../MainPage";
 // API
-import { createUrl, searchGitHubApi } from "../../apiCalls";
+import { searchGitHubApi } from "../../apiCalls";
+// Utilities
+import { createUrl } from "../../utilities";
 
 const App = () => {
   const [fetchedSearchResults, setFetchedSearchResults] = useState([]);
@@ -14,10 +15,6 @@ const App = () => {
   const [repoInfo, setRepoInfo] = useState("");
 
   const [userSearch, setUserSearch] = useState("");
-
-  // func to filter by language
-  // func to search by updated page
-  // func to sort by stars, ascend, desc
 
   const searchRepos = (searchCriteria) => {
     // dynamic api call based on criteria type
@@ -27,10 +24,8 @@ const App = () => {
       setUserSearch(url);
     }
     searchGitHubApi(url)
-    
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         if (data.items) {
           setFetchedSearchResults(data.items);
         } else {
