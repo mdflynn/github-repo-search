@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 
-const SearchForm = ({ api }) => {
+const SearchForm = ({ api, clear }) => {
   const [keywords, setKeywords] = useState([]);
 
   const handleKeywordInput = (e) => {
@@ -24,6 +24,11 @@ const SearchForm = ({ api }) => {
     api(searchCriteria);
   };
 
+  const clearSearch = () => {
+    setKeywords([]);
+    clear();
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formSearch">
@@ -38,9 +43,14 @@ const SearchForm = ({ api }) => {
             />
           </Col>
           <Col xs="auto">
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className="button-space">
               Submit
             </Button>
+            {keywords.length > 0 && (
+              <Button variant="warning" type="submit" onClick={clearSearch}>
+                Clear Search
+              </Button>
+            )}
           </Col>
         </Form.Row>
         <Form.Text className="text-muted">
