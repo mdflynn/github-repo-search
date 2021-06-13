@@ -20,7 +20,9 @@ const SearchResults = ({ data, api, url }) => {
 
   const createResultCards = () => {
     return data.map((result) => {
-      return <ResultCard data={result} viewRepo={viewRepoDetails} />;
+      return (
+        <ResultCard key={result.id} data={result} viewRepo={viewRepoDetails} />
+      );
     });
   };
 
@@ -48,9 +50,13 @@ const SearchResults = ({ data, api, url }) => {
   const sortAndFilterResults = (e) => {
     // Queries api with selected filter or sort options
     const selectedValue = e.target.getAttribute("value");
-   
-    const searchUrl = createSortFilterUrl(selectedValue, url, pageNumber);
-  
+
+    const searchUrl = createSortFilterUrl(
+      selectedValue,
+      filteredUrl,
+      pageNumber
+    );
+
     setFilteredUrl(searchUrl);
     api(searchUrl);
   };
