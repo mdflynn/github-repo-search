@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./SearchResults.css";
+// Components
 import ResultCard from "../ResultCard";
+// Utilities
 import { createSortFilterUrl } from "../../utilities";
 // Bootstrap Components
 import Pagination from "react-bootstrap/Pagination";
