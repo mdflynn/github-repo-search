@@ -1,68 +1,115 @@
 import React, { useEffect, useState } from "react";
 import "./SearchResults.css";
+// Components
+import ResultCard from "../ResultCard";
+// Utilities
+import { createSortFilterUrl } from "../../utilities";
 // Bootstrap Components
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Pagination from "react-bootstrap/Pagination";
+import Dropdown from "react-bootstrap/Dropdown";
 
-const SearchResults = ({ data, api }) => {
+const SearchResults = ({ data, api, url }) => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [dropdownLang, setDropdownLang] = useState([]);
+  const [filteredUrl, setFilteredUrl] = useState(url);
 
   const viewRepoDetails = (result) => {
     const searchCriteria = `${result.owner.login}/${result.name}`;
     api(searchCriteria);
   };
 
-  // prop function to pass detail info up
   const createResultCards = () => {
     return data.map((result) => {
       return (
-        <div className="row" key={result.id}>
-          <div className="col-sm-6">
-            <Card style={{ width: "18rem" }}>
-              <Card.Body>
-                <Card.Title>{result.name}</Card.Title>
-                <Card.Text>Language: {result.language}</Card.Text>
-                <Card.Text>Total ⭐'s: {result.stargazers_count}</Card.Text>
-                <Button
-                  variant="primary"
-                  onClick={() => viewRepoDetails(result)}
-                >
-                  View Details
-                </Button>
-              </Card.Body>
-            </Card>
-          </div>
-        </div>
+        <ResultCard key={result.id} data={result} viewRepo={viewRepoDetails} />
       );
     });
   };
 
-//   useEffect(() => {
-//     const updatePage = `${search}&page=${pageNumber}`
-//     api(updatePage)
-//   }, [pageNumber])
+  const generateDropdownItems = (repoData) => {
+    // filters unique languages
+    if (!dropdownLang.length) {
+      const languages = repoData.map((repo) => repo.language);
+      const sortedLanguages = [...new Set(languages)].sort();
+      setDropdownLang(sortedLanguages);
+    }
+
+    return dropdownLang.map((language, index) => {
+      return (
+        <Dropdown.Item
+          key={index}
+          value={language}
+          onClick={(e) => sortAndFilterResults(e)}
+        >
+          {language}
+        </Dropdown.Item>
+      );
+    });
+  };
+
+  const sortAndFilterResults = (e) => {
+    // Queries api with selected filter or sort options
+    const selectedValue = e.target.getAttribute("value");
+
+    const searchUrl = createSortFilterUrl(
+      selectedValue,
+      filteredUrl,
+      pageNumber
+    );
+
+    setFilteredUrl(searchUrl);
+    api(searchUrl);
+  };
+
+  useEffect(() => {
+    // Handles next page based on filtered results
+    const updatePage = `${filteredUrl}&page=${pageNumber}`;
+    api(updatePage);
+  }, [pageNumber]);
 
   const viewNextPage = () => {
     setPageNumber((pageNumber) => (pageNumber += 1));
-    // call api w/ updated page
-    // console.log(pageNumber);
-    // const updatePage = `${search}&page=${pageNumber}`
-    // api(updatePage)
   };
 
   const viewPreviousPage = () => {
     if (pageNumber > 1) {
       setPageNumber((pageNumber) => (pageNumber -= 1));
-    // call api w/ updated page
     }
   };
 
-  // use page number to search next page on api
-
   return (
     <>
+      <div className="button-container">
+        <Dropdown>
+          <Dropdown.Toggle variant="info" id="dropdown-basic">
+            Filter by Language
+          </Dropdown.Toggle>
+          <Dropdown.Menu>{generateDropdownItems(data)}</Dropdown.Menu>
+        </Dropdown>
+
+        <Dropdown>
+          <Dropdown.Toggle variant="info" id="dropdown-basic">
+            Sort Results
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item
+              value={"best-match"}
+              onClick={(e) => sortAndFilterResults(e)}
+            >
+              Best Match
+            </Dropdown.Item>
+            <Dropdown.Item
+              value={"stars"}
+              onClick={(e) => sortAndFilterResults(e)}
+            >
+              Star Rating
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
+
       <div className="card-deck">{createResultCards()}</div>
+
       <Pagination>
         <Pagination.Prev onClick={viewPreviousPage} />
         <Pagination.Item>{pageNumber}</Pagination.Item>

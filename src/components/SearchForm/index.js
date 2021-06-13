@@ -45,8 +45,6 @@ const SearchForm = ({ api }) => {
         </Form.Row>
         <Form.Text className="text-muted">
           Try a topic idea, project title, or random keywords!
-          <br />
-          (Be sure to add a comma after each word)
         </Form.Text>
       </Form.Group>
     </Form>

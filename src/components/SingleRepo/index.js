@@ -4,7 +4,7 @@ import "./SingleRepo.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-const SingleRepo = ({ data }) => {
+const SingleRepo = ({ data, home }) => {
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={data.owner.avatar_url} />
@@ -13,11 +13,15 @@ const SingleRepo = ({ data }) => {
         <Card.Text>Created by: {data.owner.login}</Card.Text>
         <Card.Text>Language: {data.language}</Card.Text>
         <Card.Text>Total ⭐'s: {data.stargazers_count}</Card.Text>
+        <Button variant="warning" size="sm" onClick={() => home("")}>
+          Back to Results
+        </Button>
         <Button
-          variant="primary"
+          variant="info"
           target="_blank"
           rel="noreferrer"
           href={data.html_url}
+          size="sm"
         >
           View Repo
         </Button>
