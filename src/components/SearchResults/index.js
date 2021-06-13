@@ -25,9 +25,11 @@ const SearchResults = ({ data, api, url }) => {
   };
 
   const generateDropdownItems = (repoData) => {
+    // filters unique languages
     if (!dropdownLang.length) {
       const languages = repoData.map((repo) => repo.language);
-      setDropdownLang([...new Set(languages)]);
+      const sortedLanguages = [...new Set(languages)].sort();
+      setDropdownLang(sortedLanguages);
     }
 
     return dropdownLang.map((language, index) => {
@@ -47,7 +49,7 @@ const SearchResults = ({ data, api, url }) => {
     // Queries api with selected filter or sort options
     const selectedValue = e.target.getAttribute("value");
 
-    const searchUrl = createSortFilterUrl(selectedValue, url)
+    const searchUrl = createSortFilterUrl(selectedValue, url);
 
     setFilteredUrl(searchUrl);
     api(searchUrl);
