@@ -8,7 +8,11 @@ import ErrorPage from "../ErrorPage";
 // API
 import { searchGitHubApi } from "../../apiCalls";
 // Utilities
-import { createUrl } from "../../utilities";
+import {
+  createUrl,
+  cleanSearchResults,
+  cleanSingleRepo,
+} from "../../utilities";
 
 const App = () => {
   const [fetchedSearchResults, setFetchedSearchResults] = useState([]);
@@ -38,14 +42,16 @@ const App = () => {
           if (!data.items.length) {
             setSearchAgain(true);
           }
-          setFetchedSearchResults(data.items);
+          const cleanedResults = cleanSearchResults(data.items);
+          setFetchedSearchResults(cleanedResults);
         } else {
-          setRepoInfo(data);
+          const cleanedRepo = cleanSingleRepo(data);
+          setRepoInfo(cleanedRepo);
         }
       });
   };
 
-  // clear all search and filtering values 
+  // clear all search and filtering values
   const resetSearchCriteria = () => {
     setRepoInfo("");
     setFetchedSearchResults("");
