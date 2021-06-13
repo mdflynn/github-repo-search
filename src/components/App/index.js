@@ -34,9 +34,15 @@ const App = () => {
       });
   };
 
+  const resetSearchCriteria = () => {
+    setRepoInfo("")
+    setFetchedSearchResults("")
+    setUserSearch("")
+  }
+
   return (
     <>
-      <SearchForm api={searchRepos} />
+      <SearchForm api={searchRepos} clear={resetSearchCriteria} />
       {fetchedSearchResults.length > 0 && !repoInfo && (
         <SearchResults
           api={searchRepos}
