@@ -44,7 +44,7 @@ const App = () => {
           url={userSearch}
         />
       )}
-      {repoInfo && <SingleRepo data={repoInfo} />}
+      {repoInfo && <SingleRepo data={repoInfo} home={setRepoInfo} />}
     </>
   );
 };
