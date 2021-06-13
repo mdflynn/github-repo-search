@@ -4,6 +4,7 @@ import "./App.css";
 import SearchForm from "../SearchForm";
 import SearchResults from "../SearchResults";
 import SingleRepo from "../SingleRepo";
+import ErrorPage from "../ErrorPage";
 // API
 import { searchGitHubApi } from "../../apiCalls";
 // Utilities
@@ -15,6 +16,7 @@ const App = () => {
   const [repoInfo, setRepoInfo] = useState("");
   const [userSearch, setUserSearch] = useState("");
   const [searchAgain, setSearchAgain] = useState(false);
+  const [error, setError] = useState(false);
 
   const searchRepos = (searchCriteria) => {
     // dynamic api call based on criteria type
@@ -23,8 +25,14 @@ const App = () => {
     if (!userSearch) {
       setUserSearch(url);
     }
+
     searchGitHubApi(url)
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if (resp.status > 299) {
+          setError(resp.status);
+        }
+        return resp.json();
+      })
       .then((data) => {
         if (data.items) {
           if (!data.items.length) {
@@ -37,11 +45,13 @@ const App = () => {
       });
   };
 
+  // clear all search and filtering values 
   const resetSearchCriteria = () => {
     setRepoInfo("");
     setFetchedSearchResults("");
     setUserSearch("");
     setSearchAgain(false);
+    setError(false);
   };
 
   return (
@@ -66,6 +76,11 @@ const App = () => {
       {repoInfo && (
         <div className="singlerepo-div">
           <SingleRepo data={repoInfo} home={setRepoInfo} />
+        </div>
+      )}
+      {error && (
+        <div className="singlerepo-div">
+          <ErrorPage statusCode={error} />
         </div>
       )}
     </div>
