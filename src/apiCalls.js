@@ -1,6 +1,16 @@
-export const searchGitHubApi = async (baseUrl, searchCriteria) => {
-    const searchResults = await fetch(`https://api.github.com/${baseUrl}${searchCriteria}`)
+export const searchGitHubApi = async (url) => {
+    const searchResults = await fetch(`${url}`)
     return searchResults;
+}
+
+export const createUrl = (searchCriteria) => {
+  let baseUrl = searchCriteria.includes("/")
+      ? "https://api.github.com/repos/"
+      : "https://api.github.com/search/repositories?&sort=stars&order=desc&q=";
+    if (searchCriteria.includes("language")) {
+      baseUrl = ''
+    }
+  return `${baseUrl}${searchCriteria}`
 }
 // single repo criteria => GET/repos/:owner{login}/:repo(name)
 // https://api.github.com/repos/mdflynn/slapjack
