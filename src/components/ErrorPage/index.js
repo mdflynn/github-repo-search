@@ -1,4 +1,5 @@
 import React from "react";
+// Bootstrap Components
 import Card from "react-bootstrap/Card";
 
 const ErrorPage = ({ statusCode }) => {
