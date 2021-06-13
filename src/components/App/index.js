@@ -13,8 +13,8 @@ const App = () => {
   const [fetchedSearchResults, setFetchedSearchResults] = useState([]);
   // clean data on click
   const [repoInfo, setRepoInfo] = useState("");
-
   const [userSearch, setUserSearch] = useState("");
+  const [searchAgain, setSearchAgain] = useState(false);
 
   const searchRepos = (searchCriteria) => {
     // dynamic api call based on criteria type
@@ -27,6 +27,9 @@ const App = () => {
       .then((resp) => resp.json())
       .then((data) => {
         if (data.items) {
+          if (!data.items.length) {
+            setSearchAgain(true);
+          }
           setFetchedSearchResults(data.items);
         } else {
           setRepoInfo(data);
@@ -38,10 +41,11 @@ const App = () => {
     setRepoInfo("");
     setFetchedSearchResults("");
     setUserSearch("");
+    setSearchAgain(false);
   };
 
   return (
-    <>
+    <div className="app-div">
       <div className="searchform-div">
         <SearchForm api={searchRepos} clear={resetSearchCriteria} />
       </div>
@@ -52,12 +56,19 @@ const App = () => {
           url={userSearch}
         />
       )}
+      {searchAgain && (
+        <h1 className="no-search-results">
+          Nothing found.
+          <br />
+          Try another search!
+        </h1>
+      )}
       {repoInfo && (
         <div className="singlerepo-div">
           <SingleRepo data={repoInfo} home={setRepoInfo} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
