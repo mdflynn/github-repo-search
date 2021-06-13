@@ -11,7 +11,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 const SearchResults = ({ data, api, url }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [dropdownLang, setDropdownLang] = useState([]);
-  const [filteredUrl, setFilteredUrl] = useState("");
+  const [filteredUrl, setFilteredUrl] = useState(url);
 
   const viewRepoDetails = (result) => {
     const searchCriteria = `${result.owner.login}/${result.name}`;
@@ -57,8 +57,7 @@ const SearchResults = ({ data, api, url }) => {
 
   useEffect(() => {
     // Handles next page based on filtered results
-    const nextPageUrl = filteredUrl ? filteredUrl : url;
-    const updatePage = `${nextPageUrl}&page=${pageNumber}`;
+    const updatePage = `${filteredUrl}&page=${pageNumber}`;
     api(updatePage);
   }, [pageNumber]);
 
