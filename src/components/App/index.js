@@ -6,12 +6,14 @@ import SearchResults from "../SearchResults";
 import SingleRepo from "../SingleRepo";
 import MainPage from "../MainPage";
 // API
-import { searchGitHubApi } from "../../apiCalls";
+import { createUrl, searchGitHubApi } from "../../apiCalls";
 
 const App = () => {
   const [fetchedSearchResults, setFetchedSearchResults] = useState([]);
   // clean data on click
   const [repoInfo, setRepoInfo] = useState("");
+
+  const [userSearch, setUserSearch] = useState("");
 
   // func to filter by language
   // func to search by updated page
@@ -19,14 +21,16 @@ const App = () => {
 
   const searchRepos = (searchCriteria) => {
     // dynamic api call based on criteria type
+    const url = createUrl(searchCriteria);
 
-    let baseUrl = searchCriteria.includes("/")
-      ? "repos/"
-      : "search/repositories?&sort=stars&order=desc&q=";
-
-    searchGitHubApi(baseUrl, searchCriteria)
+    if (!userSearch) {
+      setUserSearch(url);
+    }
+    searchGitHubApi(url)
+    
       .then((resp) => resp.json())
       .then((data) => {
+        console.log(data);
         if (data.items) {
           setFetchedSearchResults(data.items);
         } else {
@@ -42,6 +46,7 @@ const App = () => {
         <SearchResults
           api={searchRepos}
           data={fetchedSearchResults}
+          url={userSearch}
         />
       )}
       {repoInfo && <SingleRepo data={repoInfo} />}
