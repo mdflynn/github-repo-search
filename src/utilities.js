@@ -1,5 +1,5 @@
 // creates url based on user conditions for sort and filter
-export const createSortFilterUrl = (selection, userUrl) => {
+export const createSortFilterUrl = (selection, userUrl, page) => {
   let updatedUrl;
 
   switch (selection) {
@@ -7,10 +7,10 @@ export const createSortFilterUrl = (selection, userUrl) => {
       updatedUrl = userUrl;
       break;
     case "stars":
-      updatedUrl = `${userUrl}&sort=stars&order=desc`;
+      updatedUrl = `${userUrl}&sort=stars&order=desc&page=${page}`;
       break;
     default:
-      updatedUrl = `${userUrl}+language:${selection}`;
+      updatedUrl = `${userUrl}+language:${selection}&page=${page}`;
   }
 
   return updatedUrl;

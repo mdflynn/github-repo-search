@@ -48,9 +48,9 @@ const SearchResults = ({ data, api, url }) => {
   const sortAndFilterResults = (e) => {
     // Queries api with selected filter or sort options
     const selectedValue = e.target.getAttribute("value");
-
-    const searchUrl = createSortFilterUrl(selectedValue, url);
-
+   
+    const searchUrl = createSortFilterUrl(selectedValue, url, pageNumber);
+  
     setFilteredUrl(searchUrl);
     api(searchUrl);
   };
