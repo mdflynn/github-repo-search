@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SearchResults.css";
-import ResultCard from "../ResultCard/ResultCard";
+import ResultCard from "../ResultCard";
+import { createSortFilterUrl } from "../../utilities";
 // Bootstrap Components
 import Pagination from "react-bootstrap/Pagination";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -44,18 +45,7 @@ const SearchResults = ({ data, api, url }) => {
     // Queries api with selected filter or sort options
     const selectedValue = e.target.getAttribute("value");
 
-    let searchUrl;
-
-    switch (selectedValue) {
-      case "best-match":
-        searchUrl = url;
-        break;
-      case "stars":
-        searchUrl = `${url}&sort=stars&order=desc`;
-        break;
-      default:
-        searchUrl = `${url}+language:${e.target.getAttribute("value")}`;
-    }
+    const searchUrl = createSortFilterUrl(selectedValue, url)
 
     setFilteredUrl(searchUrl);
     api(searchUrl);

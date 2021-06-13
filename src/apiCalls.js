@@ -3,26 +3,6 @@ export const searchGitHubApi = async (url) => {
   return searchResults;
 };
 
-export const createUrl = (searchCriteria) => {
-  let baseUrl = "";
-
-  if (!searchCriteria.includes("github")) {
-    baseUrl = searchCriteria.includes("/")
-      ? "https://api.github.com/repos/"
-      : "https://api.github.com/search/repositories?&q=";
-  }
-
-  if (
-    searchCriteria.includes("language") ||
-    searchCriteria.includes("page") ||
-    searchCriteria.includes("sort")
-  ) {
-    baseUrl = "";
-  }
-
-  return `${baseUrl}${searchCriteria}`;
-};
-
 // single repo criteria => GET/repos/:owner{login}/:repo(name)
 // https://api.github.com/repos/mdflynn/slapjack
 
