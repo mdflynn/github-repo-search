@@ -35,14 +35,16 @@ const App = () => {
   };
 
   const resetSearchCriteria = () => {
-    setRepoInfo("")
-    setFetchedSearchResults("")
-    setUserSearch("")
-  }
+    setRepoInfo("");
+    setFetchedSearchResults("");
+    setUserSearch("");
+  };
 
   return (
     <>
-      <SearchForm api={searchRepos} clear={resetSearchCriteria} />
+      <div className="searchform-div">
+        <SearchForm api={searchRepos} clear={resetSearchCriteria} />
+      </div>
       {fetchedSearchResults.length > 0 && !repoInfo && (
         <SearchResults
           api={searchRepos}
@@ -50,7 +52,11 @@ const App = () => {
           url={userSearch}
         />
       )}
-      {repoInfo && <SingleRepo data={repoInfo} home={setRepoInfo} />}
+      {repoInfo && (
+        <div className="singlerepo-div">
+          <SingleRepo data={repoInfo} home={setRepoInfo} />
+        </div>
+      )}
     </>
   );
 };

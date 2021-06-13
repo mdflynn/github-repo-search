@@ -47,8 +47,13 @@ const SearchForm = ({ api, clear }) => {
               Submit
             </Button>
             {keywords.length > 0 && (
-              <Button variant="warning" type="submit" onClick={clearSearch}>
-                Clear Search
+              <Button
+                variant="warning"
+                type="submit"
+                size="sm"
+                onClick={clearSearch}
+              >
+                Clear
               </Button>
             )}
           </Col>

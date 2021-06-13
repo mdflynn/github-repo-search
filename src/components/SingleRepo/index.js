@@ -13,7 +13,12 @@ const SingleRepo = ({ data, home }) => {
         <Card.Text>Created by: {data.owner.login}</Card.Text>
         <Card.Text>Language: {data.language}</Card.Text>
         <Card.Text>Total ⭐'s: {data.stargazers_count}</Card.Text>
-        <Button variant="warning" size="sm" onClick={() => home("")}>
+        <Button
+          variant="warning"
+          size="sm"
+          className="button-space"
+          onClick={() => home("")}
+        >
           Back to Results
         </Button>
         <Button
