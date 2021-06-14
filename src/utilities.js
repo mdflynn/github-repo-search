@@ -18,13 +18,42 @@ export const createSortFilterUrl = (selection, userUrl, page) => {
 
 // creates url based on initial search or single repo
 export const createUrl = (searchCriteria) => {
-    let baseUrl = "";
-  
-    if (!searchCriteria.includes("github")) {
-      baseUrl = searchCriteria.includes("/")
-        ? "https://api.github.com/repos/"
-        : "https://api.github.com/search/repositories?&q=";
-    }
+  let baseUrl = "";
 
-    return `${baseUrl}${searchCriteria}`;
+  if (!searchCriteria.includes("github")) {
+    baseUrl = searchCriteria.includes("/")
+      ? "https://api.github.com/repos/"
+      : "https://api.github.com/search/repositories?&q=";
+  }
+
+  return `${baseUrl}${searchCriteria}`;
+};
+
+export const cleanSearchResults = (results) => {
+  return results.map((result) => {
+    return {
+      id: result.id,
+      name: result.name,
+      language: result.language,
+      stargazers_count: result.stargazers_count,
+      owner: {
+        login: result.owner.login,
+      },
+    };
+  });
+};
+
+export const cleanSingleRepo = (repo) => {
+  return {
+    id: repo.id,
+    name: repo.name,
+    language: repo.language,
+    stargazers_count: repo.stargazers_count,
+    description: repo.description,
+    html_url: repo.html_url,
+    owner: {
+      login: repo.owner.login,
+      avatar_url: repo.owner.avatar_url,
+    },
   };
+};
