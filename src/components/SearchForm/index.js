@@ -10,6 +10,9 @@ const SearchForm = ({ api, clear }) => {
 
   const handleKeywordInput = (e) => {
     setKeywords(e.target.value);
+    if (!keywords.length) {
+      clear();
+    }
   };
 
   const cleanSearchCriteria = () => {
