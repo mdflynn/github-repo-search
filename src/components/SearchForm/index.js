@@ -32,7 +32,7 @@ const SearchForm = ({ api, clear }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formSearch">
-        <Form.Label>Search for repos on GitHub!</Form.Label>
+        <Form.Label style={{fontSize: "25px"}}>Search for repos on GitHub!</Form.Label>
         <Form.Row className="align-items-center">
           <Col xs="5">
             <Form.Control
