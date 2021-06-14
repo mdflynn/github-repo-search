@@ -1,5 +1,6 @@
 import React from "react";
 import ResultCard from ".";
+import { mockedSingleSearchResult } from "../../testData";
 // Testing Dependencies
 import { screen, render } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -7,16 +8,11 @@ import userEvent from "@testing-library/user-event";
 
 describe("<ResultCard />", () => {
   beforeEach(() => {
-    const mockedResultData = {
-      id: 123,
-      name: "Sweet Repo",
-      language: "JavaScript",
-      stargazers_count: 42,
-    };
-
     const mockedFunction = jest.mock();
 
-    render(<ResultCard data={mockedResultData} viewRepo={mockedFunction} />);
+    render(
+      <ResultCard data={mockedSingleSearchResult} viewRepo={mockedFunction} />
+    );
   });
 
   //unit tests

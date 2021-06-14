@@ -1,23 +1,13 @@
 import React from "react";
 import SingleRepo from ".";
+import { mockedRepoData } from "../../testData";
 // Testing Dependencies
 import { screen, render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 describe("<SingleRepo />", () => {
   beforeEach(() => {
-    const mockedRepoData = {
-      id: 123,
-      name: "Sweet Repo",
-      language: "JavaScript",
-      stargazers_count: 42,
-      description: "Awesome JavaScript Project",
-      html_url: "https://github.com/Turing-Projects-MF/slapjack",
-      owner: {
-        login: "mdflynn",
-        avatar_url: "https://avatars.githubusercontent.com/u/80067121?v=4",
-      },
-    };
+ 
     const mockedHomeFunc = jest.mock();
     render(<SingleRepo data={mockedRepoData} home={mockedHomeFunc} />);
   });
